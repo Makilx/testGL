@@ -2,6 +2,7 @@
 #include <gl/VertexArray.h>
 #include <gl/Texture.h>
 #include <glfw/glfw3.h>
+#include <main/Camera.h>
 
 enum class TileType : unsigned int {
 	Air = 0,
@@ -16,19 +17,26 @@ struct Vertex {
 
 class Geometry {
 public:
-	Geometry() : array(), vbo(GL_ARRAY_BUFFER), ibo(GL_ELEMENT_ARRAY_BUFFER), geometrySpriteSheet("resources\\GeometrySheet.png") {}
+	Geometry() 
+		: 
+		array(), 
+		vbo(GL_ARRAY_BUFFER), 
+		ibo(GL_ELEMENT_ARRAY_BUFFER), 
+		geometrySpriteSheet("resources\\GeometrySheet.png"), 
+		shaders(ReadFile("resources\\shaders\\geometry_vert.glsl"), ReadFile("resources\\shaders\\geometry_frag.glsl")) { }
 
 	void SetTile(int x, int y, TileType type);
 	void Fill(int x0, int y0, int x1, int y1, TileType type);
 	void Resize(int width, int height);
 
-	void Draw(ShaderProgram& shader);
+	void Draw(Camera& camera, GLFWwindow* window);
 
 private:
 	VertexArray array;
 	Buffer vbo;
 	Buffer ibo;
 	Texture geometrySpriteSheet;
+	ShaderProgram shaders;
 
 	bool updateBuffers = true;
 	bool updateData = false;

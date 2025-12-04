@@ -44,11 +44,24 @@ void Geometry::Resize(int width, int height) {
 	UpdateData();
 }
 
-void Geometry::Draw(ShaderProgram& shader) {
-	// Use texure
-	shader.Use();
-	geometrySpriteSheet.Use(shader, 0);
+void Geometry::Draw(Camera& camera, GLFWwindow *window) {
+	// Load data
+	int width, height;
+	glfwGetFramebufferSize(window, &width, &height);
+
+	static double lastTime = 0;
+	double currentTime = glfwGetTime();
+	double delta = currentTime - lastTime;
+	lastTime = currentTime;
+
+	shaders.Use();
 	array.Bind();
+
+	// Activate camera
+	camera.Apply(shaders, width, height, delta);
+
+	// Use texure
+	geometrySpriteSheet.Use(shaders, 0);
 
 	// Update Data
 	if (updateData) {

@@ -1,9 +1,4 @@
 #include "config.h"
-#include <gl/Shader.h>
-#include <glm/gtc/matrix_transform.hpp>
-#include <main/Geometry.h>
-#include <main/Camera.h>
-#include <gl/Texture.h>
 
 // Functions
 void APIENTRY glDebugOutput(GLenum source,
@@ -65,22 +60,22 @@ Camera* currentCamera;
 
 void OnKeyDown(GLFWwindow* window, int key, int, int, int) {
 	if (key == GLFW_KEY_W) {
-		currentCamera->position.y += 7;
+		currentCamera->position.y += 12;
 	}
 	if (key == GLFW_KEY_A) {
-		currentCamera->position.x -= 7;
+		currentCamera->position.x -= 12;
 	}
 	if (key == GLFW_KEY_S) {
-		currentCamera->position.y -= 7;
+		currentCamera->position.y -= 12;
 	}
 	if (key == GLFW_KEY_D) {
-		currentCamera->position.x += 7;
+		currentCamera->position.x += 12;
 	}
 	if (key == GLFW_KEY_R) {
-		currentCamera->zoom += 1;
+		currentCamera->zoom += .2;
 	}
 	if (key == GLFW_KEY_T) {
-		currentCamera->zoom -= 1;
+		currentCamera->zoom -= .2;
 	}
 }
 
@@ -105,9 +100,8 @@ int main() {
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 	glDebugMessageCallback(glDebugOutput, nullptr);
 	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
-
+	
 	// Render
-	ShaderProgram shader(ReadFile("resources\\vertex.glsl"), ReadFile("resources\\fragment.glsl"));
 	Geometry geometry;
 	geometry.Resize(35, 35);
 	geometry.Fill(1, 1, 35, 35, TileType::Solid);
@@ -130,18 +124,8 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 		glClearColor(0.2, 0.3, 0.6, 1);
 
-		// Delta time calculation
-		double time = glfwGetTime();
-		double deltaTime = time - currentTime;
-		currentTime = time;
-
 		// Render
-		int w, h;
-		glfwGetWindowSize(window, &w, &h);
-
-		shader.Use();
-		cam.Apply(shader, w, h, deltaTime);
-		geometry.Draw(shader);
+		geometry.Draw(cam, window);
 
 		// Update
 		glfwSwapBuffers(window);
