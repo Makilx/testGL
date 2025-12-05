@@ -143,6 +143,7 @@
     <ClCompile Include="Dependencies\imgui\imgui_tables.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Dependencies\stb\stb_image.c" />
+    <ClCompile Include="src\main\hud\GeometryHUD.cpp" />
     <ClCompile Include="src\main\Geometry.cpp" />
     <ClCompile Include="src\main\Camera.cpp" />
     <ClCompile Include="src\gl\Shader.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Dependencies\imgui\imstb_textedit.h" />
     <ClInclude Include="Dependencies\imgui\imstb_truetype.h" />
     <ClInclude Include="Dependencies\stb\stb_image.h" />
+    <ClInclude Include="src\main\hud\GeometryHUD.h" />
     <ClInclude Include="src\main\Geometry.h" />
     <ClInclude Include="src\main\Camera.h" />
     <ClInclude Include="src\gl\Shader.h" />

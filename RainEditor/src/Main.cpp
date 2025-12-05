@@ -92,6 +92,7 @@ int main() {
 	if (!gladLoadGL()) GLFW_CLOSE(-1);
 
 	// Config
+	glViewport(0, 0, 500, 400);
 	glfwSwapInterval(60);
 	glfwSetFramebufferSizeCallback(window, OnResize);
 	glfwSetKeyCallback(window, OnKeyDown);
@@ -101,18 +102,20 @@ int main() {
 	glDebugMessageCallback(glDebugOutput, nullptr);
 	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 	
+	// IMGUI > Setup
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO io = ImGui::GetIO(); (void)io;
+	ImGui::StyleColorsDark();
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init("#version 450");
+
 	// Render
 	Geometry geometry;
-	geometry.Resize(35, 35);
-	geometry.Fill(1, 1, 35, 35, TileType::Solid);
-	geometry.SetTile(5, 5, TileType::Air);
-	geometry.SetTile(10, 10, TileType::Air);
-	geometry.SetTile(15, 15, TileType::Air);
-	geometry.SetTile(20, 20, TileType::Air);
-	geometry.SetTile(25, 25, TileType::Air);
-	geometry.SetTile(30, 30, TileType::Air);
-	geometry.SetTile(35, 35, TileType::Air);
-	geometry.SetTile(1, 1, TileType::Slope);
+	GeometryHUD geometryHUD(&geometry);
+
+	geometry.Resize(150, 150);
+	geometry.Fill(1, 1, 150, 150, TileType::Solid);
 
 	Camera cam;
 	currentCamera = &cam;
@@ -120,17 +123,35 @@ int main() {
 	double currentTime = 0;
 
 	while (!glfwWindowShouldClose(window)) {
+		// Get any inputs
+		glfwPollEvents();
+		
 		//Clear
 		glClear(GL_COLOR_BUFFER_BIT);
 		glClearColor(0.2, 0.3, 0.6, 1);
+		
+		// ImGui Frame
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
 
 		// Render
 		geometry.Draw(cam, window);
+		geometryHUD.Draw();
+
+		// ImGUI Draw
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		ImGui::EndFrame();
 
 		// Update
 		glfwSwapBuffers(window);
-		glfwPollEvents(); 
 	}
+
+	// Imgui Clear
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 
 	// Clear
 	GLFW_CLOSE(0);
