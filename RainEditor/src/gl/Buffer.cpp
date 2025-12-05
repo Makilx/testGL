@@ -1,5 +1,5 @@
 #include "gl/Buffer.h"
-#include <iostream>
+using namespace gl;
 
 Buffer::Buffer(GLenum type) {
 	this->type = type;

@@ -9,9 +9,8 @@
 #include <imgui/imgui_impl_opengl3.h>
 
 // Includes.Custom //
-#include <main/Geometry.h>
 #include <main/Camera.h>
-#include <main/hud/GeometryHUD.h>
+#include <main/Mesh.h>
 
 // Macros //
 #define GLFW_CLOSE(x) { glfwTerminate(); exit(x); }

@@ -1,6 +1,7 @@
 #include "Texture.h"
 #include <stb/stb_image.h>
 #include <string>
+using namespace gl;
 
 Texture::Texture(std::string filePath) {
 	stbi_set_flip_vertically_on_load(true);
@@ -31,9 +32,11 @@ Texture::Texture(std::string filePath) {
 
 	this->width = width;
 	this->height = height;
+	this->data = data;
 }
 
 Texture::~Texture() {
+	if (data) Free();
 	glDeleteTextures(1, &id);
 }
 
@@ -43,4 +46,8 @@ void Texture::Use(ShaderProgram& shader, GLint slot) {
 
 	std::string name = "Texture" + std::to_string(slot);
 	shader.Uniform(name, slot);
+}
+
+void Texture::Free() {
+	stbi_image_free(data);
 }

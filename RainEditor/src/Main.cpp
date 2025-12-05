@@ -56,29 +56,6 @@ void OnResize(GLFWwindow *window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
-Camera* currentCamera;
-
-void OnKeyDown(GLFWwindow* window, int key, int, int, int) {
-	if (key == GLFW_KEY_W) {
-		currentCamera->position.y += 12;
-	}
-	if (key == GLFW_KEY_A) {
-		currentCamera->position.x -= 12;
-	}
-	if (key == GLFW_KEY_S) {
-		currentCamera->position.y -= 12;
-	}
-	if (key == GLFW_KEY_D) {
-		currentCamera->position.x += 12;
-	}
-	if (key == GLFW_KEY_R) {
-		currentCamera->zoom += .2;
-	}
-	if (key == GLFW_KEY_T) {
-		currentCamera->zoom -= .2;
-	}
-}
-
 // Main
 int main() {
 	if (!glfwInit()) return -1;
@@ -95,7 +72,6 @@ int main() {
 	glViewport(0, 0, 500, 400);
 	glfwSwapInterval(60);
 	glfwSetFramebufferSizeCallback(window, OnResize);
-	glfwSetKeyCallback(window, OnKeyDown);
 
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
@@ -111,16 +87,24 @@ int main() {
 	ImGui_ImplOpenGL3_Init("#version 450");
 
 	// Render
-	Geometry geometry;
-	GeometryHUD geometryHUD(&geometry);
+	gl::ShaderProgram program(
+		gl::ReadFile("resources\\shaders\\global_vert.glsl"),
+		gl::ReadFile("resources\\shaders\\global_frag.glsl")
+	);
 
-	geometry.Resize(150, 150);
-	geometry.Fill(1, 1, 150, 150, TileType::Solid);
+	GLfloat vertices[] = {
+		-0.5f,  0.5f,
+		-0.5f, -0.5f,
+		 0.5f, -0.5f,
+		 0.5f,  0.5f,
+	};
 
-	Camera cam;
-	currentCamera = &cam;
+	GLuint indices[] = {
+		0, 1, 2,
+		0, 2, 3
+	};
 
-	double currentTime = 0;
+	Mesh triangle(vertices, sizeof(vertices), indices, sizeof(indices));
 
 	while (!glfwWindowShouldClose(window)) {
 		// Get any inputs
@@ -136,8 +120,8 @@ int main() {
 		ImGui::NewFrame();
 
 		// Render
-		geometry.Draw(cam, window);
-		geometryHUD.Draw();
+		program.Use();
+		triangle.Draw();
 
 		// ImGUI Draw
 		ImGui::Render();

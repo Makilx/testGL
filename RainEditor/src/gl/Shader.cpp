@@ -3,8 +3,9 @@
 #include <sstream>
 #include <iostream>
 #include <cerrno>
+using namespace gl;
 
-std::string ReadFile(const char* path) {
+std::string gl::ReadFile(const char* path) {
 	std::ifstream in(path, std::ios::binary);
 	if (in)
 	{
