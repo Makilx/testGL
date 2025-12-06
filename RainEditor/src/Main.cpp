@@ -105,6 +105,7 @@ int main() {
 	};
 
 	Mesh triangle(vertices, sizeof(vertices), indices, sizeof(indices));
+	triangle.layout.Push<float>(2);
 
 	while (!glfwWindowShouldClose(window)) {
 		// Get any inputs

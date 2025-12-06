@@ -6,7 +6,6 @@ public:
 	gl::VertexArrayLayout layout;
 
 	Mesh(GLenum usage = GL_STATIC_DRAW);
-	Mesh(GLfloat* vertices, GLsizeiptr vSize, GLenum usage = GL_STATIC_DRAW);
 	Mesh(GLfloat* vertices, GLsizeiptr vSize, GLuint* indices, GLsizeiptr iSize, GLenum usage = GL_STATIC_DRAW);
 
 	void VerticesData(GLfloat* vertices, GLsizeiptr vSize);
@@ -24,5 +23,5 @@ private:
 	// Data
 	GLenum drawType;
 	unsigned int indicesCount = 0;
-	bool updateBuffers = false;
+	bool updateBuffers = true;
 };

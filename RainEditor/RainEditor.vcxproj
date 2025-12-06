@@ -144,7 +144,8 @@
     <ClCompile Include="Dependencies\imgui\imgui_tables.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Dependencies\stb\stb_image.c" />
-    <ClCompile Include="src\main\Mesh.cpp" />
+    <ClCompile Include="src\abstract\geometry\Geometry.cpp" />
+    <ClCompile Include="src\abstract\Mesh.cpp" />
     <ClCompile Include="src\gl\Shader.cpp" />
     <ClCompile Include="src\gl\Buffer.cpp" />
     <ClCompile Include="Dependencies\khr\glad.c" />
@@ -163,13 +164,14 @@
     <ClInclude Include="Dependencies\imgui\imstb_textedit.h" />
     <ClInclude Include="Dependencies\imgui\imstb_truetype.h" />
     <ClInclude Include="Dependencies\stb\stb_image.h" />
-    <ClInclude Include="src\main\Mesh.h" />
+    <ClInclude Include="src\abstract\geometry\Geometry.h" />
+    <ClInclude Include="src\abstract\Mesh.h" />
     <ClInclude Include="src\gl\Shader.h" />
     <ClInclude Include="src\gl\Buffer.h" />
     <ClInclude Include="src\Config.h" />
     <ClInclude Include="src\gl\VertexArray.h" />
     <ClInclude Include="src\gl\Texture.h" />
-    <ClInclude Include="src\main\Camera.h" />
+    <ClInclude Include="src\abstract\Camera.h" />
     <ClInclude Include="src\type\CFrame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

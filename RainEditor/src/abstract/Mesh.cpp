@@ -1,16 +1,14 @@
 #include "Mesh.h"
+#include <iostream>
 
 Mesh::Mesh(GLenum usage) 
 	: vbo(GL_ARRAY_BUFFER), ibo(GL_ELEMENT_ARRAY_BUFFER), drawType(usage) {
 }
 
-Mesh::Mesh(GLfloat* vertices, GLsizeiptr vSize, GLenum usage) 
-	: vbo(GL_ARRAY_BUFFER, vertices, vSize, usage), ibo(GL_ELEMENT_ARRAY_BUFFER), drawType(usage) {
-}
-
 Mesh::Mesh(GLfloat* vertices, GLsizeiptr vSize, GLuint* indices, GLsizeiptr iSize, GLenum usage)
 	: vbo(GL_ARRAY_BUFFER, vertices, vSize, usage), ibo(GL_ELEMENT_ARRAY_BUFFER, indices, iSize, usage), drawType(usage) {
 	indicesCount = iSize / sizeof(GLuint);
+	updateBuffers = true;
 }
 
 void Mesh::VerticesData(GLfloat* vertices, GLsizeiptr vSize) {
@@ -45,6 +43,8 @@ void Mesh::Draw(GLenum drawType) {
 		ibo.Bind();
 		updateBuffers = false;
 	}
+
+	std::cout << "Currently " << indicesCount << std::endl;
 
 	// Draw
 	glDrawElements(drawType, indicesCount, GL_UNSIGNED_INT, NULL);

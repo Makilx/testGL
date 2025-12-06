@@ -57,7 +57,10 @@
     <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\main\Mesh.cpp">
+    <ClCompile Include="src\abstract\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\abstract\geometry\Geometry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,10 +113,13 @@
     <ClInclude Include="src\type\CFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\main\Camera.h">
+    <ClInclude Include="src\abstract\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\main\Mesh.h">
+    <ClInclude Include="src\abstract\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\abstract\geometry\Geometry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
